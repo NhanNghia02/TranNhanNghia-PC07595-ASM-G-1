@@ -47,29 +47,23 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    
-                    <div class="container">
-                        <h1 class="text-center">
-                            Category Detail
-                    
-                        </h1>
-                        <h2>Category ID: <%= data.id %></h2>
-                        <form action="">
-                            <div class="form-group">
-                                <label for="">Name</label>
-                                <input type="text" class="form-control" name="name" id="name" placeholder="" value="<%= data.name %>">
-                            </div>
-                            <div class="form-group">
-                                <label for="">Status</label>
-                                <select name="status" id="" class="form-control">
-                                    <option value="1" <% if(data.status==1){ %> selected <% } %> >Display</option>
-                                    <option value="0" <% if(data.status==0){ %> selected <% } %> >Hidden</option>
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-info w-100 mt-5">Create</button>
-                        </form>
+                    <div class="card-header">
+                        <h2>Sửa Loại Hàng</h2>
                     </div>
-
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="form-floating mb-3 mt-3">
+                            <label>Tên</label>
+                            <input type="text" class="form-control" placeholder="Nhập tên loại hàng" name="cateName" required>
+                        </div>
+                        <div class="form-floating mb-3 mt-3">
+                        <label>Tình Trạng</label>
+                            <select class="form-control" name="status">
+                                <option value="Còn kinh doanh">Còn kinh doanh</option>
+                                <option value="Ngừng kinh doanh">Ngừng kinh doanh</option>
+                            </select>
+                        </div>
+                        <button name="editCate" class="btn btn-primary">Sửa</button>
+                    </form>
                 </div>
                 <!-- /.container-fluid -->
 
