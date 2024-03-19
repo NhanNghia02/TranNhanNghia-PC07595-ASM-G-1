@@ -65,20 +65,20 @@ app.get('/client/category/list', (req, res) => {
 
     // Giả sử categories là dữ liệu đươcj lấy ra từ cơ sở dữ liệu 
     var categories = [{
-            id: 1,
-            name: 'Category 1',
-            status: 1
-        },
-        {
-            id: 2,
-            name: 'Category 2',
-            status: 1
-        },
-        {
-            id: 3,
-            name: 'Category 3',
-            status: 1
-        }
+        id: 1,
+        name: 'Category 1',
+        status: 1
+    },
+    {
+        id: 2,
+        name: 'Category 2',
+        status: 1
+    },
+    {
+        id: 3,
+        name: 'Category 3',
+        status: 1
+    }
     ]
     // Hiển thị kèm theo dữ liệu ra giao diện 
     res.render('client/category/list', {
@@ -111,6 +111,22 @@ app.get('/admin', (req, res) => {
 
 // Hiển thị danh sách loại sản phẩm của admin
 app.get('/admin/category/list', (req, res) => {
+    var categories = [{
+        id: 1,
+        name: 'Category 1',
+        status: 1
+    },
+    {
+        id: 2,
+        name: 'Category 2',
+        status: 1
+    },
+    {
+        id: 3,
+        name: 'Category 3',
+        status: 1
+    }
+    ]
     res.render('admin/category/list', {
         data: categories
     })
