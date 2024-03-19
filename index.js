@@ -127,6 +127,7 @@ app.get('/admin/category/list', (req, res) => {
         status: 1
     }
     ]
+    // Hiển thị kèm theo dữ liệu ra giao diện
     res.render('admin/category/list', {
         data: categories
     })
