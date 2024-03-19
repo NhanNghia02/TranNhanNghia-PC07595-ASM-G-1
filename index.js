@@ -102,6 +102,7 @@ app.get('/client/category/contact', (req, res) => {
 })
 
 
+
 // **** Admin ****
 // Hiển thị giao diện trang chủ của admin 
 app.get('/admin', (req, res) => {
@@ -157,7 +158,7 @@ app.get('/admin/category/:id', (req, res) => {
 })
 
 
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
-// connection.end();
