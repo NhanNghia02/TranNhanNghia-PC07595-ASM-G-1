@@ -145,12 +145,13 @@ app.post('/admin/category/create', (req, res) => {
     const status = req.body.status;
 
     // Thực hiện câu truy vấn INSERT để thêm dữ liệu vào cơ sở dữ liệu
-    const sql = "INSERT INTO categories (name, status) VALUES (?, ?)";
+    const sql = "INSERT INTO categories (cateName, status) VALUES (?, ?)";
     connection.query(sql, [cateName, status], (err, result) => {
         if (err) {
             console.error('Error inserting data: ' + err.stack);
             // Xử lý lỗi nếu có
-            res.status(500).send('Internal Server Error');
+            // res.status(500).send('Internal Server Error');
+            res.send(err);
             return;
         }
         console.log('Inserted a new category with id ' + result.insertId);
@@ -169,6 +170,7 @@ app.get('/admin/category/:id', (req, res) => {
         name: 'Category 1',
         status: 1
     };
+
     res.render('admin/category/detail', {
         data: category
     });
