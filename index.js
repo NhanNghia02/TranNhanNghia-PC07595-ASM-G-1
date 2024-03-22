@@ -34,9 +34,7 @@ const storage = multer.diskStorage({
     }
 })
 
-const upload = multer({
-    storage: storage
-})
+const uploadMiddleware = multer({ storage: storage }).single('cateImage');
 
 
 
@@ -139,24 +137,65 @@ app.get('/admin/category/create', (req, res) => {
 })
 
 // Thêm dữ liệu vào form
-app.post('/admin/category/create', (req, res) => {
+app.post('/admin/category/create', uploadMiddleware, (req, res) => {
+
     // Lấy dữ liệu từ form
     const cateName = req.body.cateName;
-    const status = req.body.status;
+    const cateStatus = req.body.cateStatus;
+    const cateImage = req.file.filename;
 
     // Thực hiện câu truy vấn INSERT để thêm dữ liệu vào cơ sở dữ liệu
-    const sql = "INSERT INTO categories (cateName, status) VALUES (?, ?)";
-    connection.query(sql, [cateName, status], (err, result) => {
+    const sql = "INSERT INTO categories (cateName, cateStatus, cateImage) VALUES (?, ?, ?)";
+    connection.query(sql, [cateName, cateStatus, cateImage], (err, result) => {
         if (err) {
             console.error('Error inserting data: ' + err.stack);
             // Xử lý lỗi nếu có
-            // res.status(500).send('Internal Server Error');
+            res.status(500).send('Internal Server Error');
             res.send(err);
             return;
         }
         console.log('Inserted a new category with id ' + result.insertId);
         // Chuyển hướng người dùng sau khi thêm dữ liệu thành công
         res.redirect('/admin/category/create');
+    });
+});
+
+// Hiển thị form và sửa dữ liệu
+app.get('/admin/category/detail/:id', (req, res) => {
+    const categoryId = req.params.id;
+    const sql = "SELECT * FROM categories WHERE id = ?";
+    connection.query(sql, [categoryId], (err, result) => {
+        if (err) {
+            console.error('Error retrieving data: ' + err.stack);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        if (result.length === 0) {
+            // Không tìm thấy mục có ID tương ứng trong cơ sở dữ liệu
+            res.status(404).send('Category not found');
+            return;
+        }
+        // Hiển thị form chỉnh sửa với thông tin của mục cần chỉnh sửa
+        res.render('admin/category/detail', { category: result[0] });
+    });
+});
+
+// Xữ lý và gửi dữ liệu
+app.post('/admin/category/detail/:id', (req, res) => {
+    const categoryId = req.params.id;
+    const { cateName, cateStatus } = req.body;
+
+    // Thực hiện câu truy vấn UPDATE để cập nhật thông tin của mục trong cơ sở dữ liệu
+    const sql = "UPDATE categories SET cateName = ?, cateStatus = ? WHERE id = ?";
+    connection.query(sql, [cateName, cateStatus, categoryId], (err, result) => {
+        if (err) {
+            console.error('Error updating data: ' + err.stack);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        console.log('Updated category with id ' + categoryId);
+        // Chuyển hướng người dùng sau khi cập nhật dữ liệu thành công
+        res.redirect('/admin/category/list');
     });
 });
 
