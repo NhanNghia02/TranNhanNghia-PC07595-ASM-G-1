@@ -61,9 +61,6 @@
                                     <a href="/admin/category/create"><button
                                             class="btn text-gray-100 bg-gradient-primary">Thêm
                                             Loại</button></a>
-                                    <a href="/admin/category/detail"><button
-                                            class="btn btn-warning">Sửa
-                                            Loại</button></a>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -72,20 +69,41 @@
                                                 <tr>
                                                     <th>#</th>
                                                     <th>Thương Hiệu</th>
+                                                    <th>Hình Ảnh</th>
                                                     <th>Tình Trạng</th>
                                                     <th>Chỉnh Sửa</th>
+                                                    <th>Xóa</th>
                                                 </tr>
                                             </thead>
                                             <tfoot>
                                                 <tr>
                                                     <th>#</th>
                                                     <th>Thương Hiệu</th>
+                                                    <th>Hình Ảnh</th>
                                                     <th>Tình Trạng</th>
                                                     <th>Chỉnh Sửa</th>
+                                                    <th>Xóa</th>
                                                 </tr>
                                             </tfoot>
                                             <tbody>
-
+                                                <% categories.forEach(function(category) { %>
+                                                    <tr>
+                                                        <td>
+                                                            <%= category.id %>
+                                                        </td>
+                                                        <td>
+                                                            <%= category.cateName %>
+                                                        </td>
+                                                        <td><img src="" alt="no image"></td>
+                                                        <td>
+                                                            <%= category.cateStatus %>
+                                                        </td>
+                                                        <td><a href="/admin/category/detail=<%= category.id %>"><button
+                                                                    class="btn btn-warning">Sửa Loại</button></a></td>
+                                                        <td><a href="/admin/category/delete=<%= category.id %>"><button
+                                                                    class="btn btn-danger">Xóa Loại</button></a></td>
+                                                    </tr>
+                                                    <% }); %>
                                             </tbody>
                                         </table>
                                     </div>

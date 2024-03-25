@@ -109,27 +109,18 @@ app.get('/admin', (req, res) => {
 
 // Hiển thị danh sách loại sản phẩm của admin
 app.get('/admin/category/list', (req, res) => {
-    var categories = [{
-        id: 1,
-        name: 'Category 1',
-        status: 1
-    },
-    {
-        id: 2,
-        name: 'Category 2',
-        status: 1
-    },
-    {
-        id: 3,
-        name: 'Category 3',
-        status: 1
-    }
-    ]
-    // Hiển thị kèm theo dữ liệu ra giao diện
-    res.render('admin/category/list', {
-        data: categories
-    })
-})
+    // Truy vấn SQL để lấy danh sách loại sản phẩm từ cơ sở dữ liệu
+    connection.query('SELECT * FROM categories', (error, results, fields) => {
+        if (error) {
+            console.log("Lỗi khi truy vấn dữ liệu từ cơ sở dữ liệu:", error);
+            res.status(500).send("Đã xảy ra lỗi khi lấy dữ liệu từ cơ sở dữ liệu");
+            return;
+        }
+        res.render('admin/category/list', {
+            categories: results
+        });
+    });
+});
 
 // Hiển thị form thêm
 app.get('/admin/category/create', (req, res) => {
@@ -156,7 +147,7 @@ app.post('/admin/category/create', uploadMiddleware, (req, res) => {
         }
         console.log('Inserted a new category with id ' + result.insertId);
         // Chuyển hướng người dùng sau khi thêm dữ liệu thành công
-        res.redirect('/admin/category/create');
+        res.redirect('/admin/category/list');
     });
 });
 
@@ -183,11 +174,11 @@ app.get('/admin/category/detail/:id', (req, res) => {
 // Xữ lý và gửi dữ liệu
 app.post('/admin/category/detail/:id', (req, res) => {
     const categoryId = req.params.id;
-    const { cateName, cateStatus } = req.body;
+    const { cateName, cateStatus, cateImage } = req.body;
 
     // Thực hiện câu truy vấn UPDATE để cập nhật thông tin của mục trong cơ sở dữ liệu
     const sql = "UPDATE categories SET cateName = ?, cateStatus = ? WHERE id = ?";
-    connection.query(sql, [cateName, cateStatus, categoryId], (err, result) => {
+    connection.query(sql, [cateName, cateStatus, cateImage, categoryId], (err, result) => {
         if (err) {
             console.error('Error updating data: ' + err.stack);
             res.status(500).send('Internal Server Error');
