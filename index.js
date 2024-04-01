@@ -1,74 +1,49 @@
-const express = require('express');
-var app = express();
+const express = require('express')
+const bodyParser = require('body-parser')
+const multer = require('multer')
+
+// const upload = multer({ dest: 'uploads/' })
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './uploads')
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname)
+    }
+})
+
+const upload = multer({
+    storage: storage
+});
+
+const app = express();
 const port = 3000;
-
 app.set('view engine', 'ejs');
-app.set('views', "./src/views");
+
+// Chỉ định thư mục gốc
+app.set('views', "./views");
 app.use(express.static('assets'));
+app.use(express.json())
+app.use(bodyParser.urlencoded({
+    extended: true
+}))
 
-
-// ********* Xữ lý router Admin *********
-// Trang chủ
-const adminRouters = require('./router/admin');
-app.use('/admin', adminRouters);
-
-// Trang danh mục sản phẩm
-const shopAdRoutes =  require('./router/admin');
-app.use('/category/list', shopAdRoutes);
-
-// Trang thêm dữ liệu sản phẩm
-const addRoutes = require('./router/admin');
-app.use('/category/create', addRoutes);
-
-// Thêm dữ liệu sản phẩm
-const newAddRouters = require('./router/admin');
-app.use('/category/create', newAddRouters);
-
-
-
-
-// ********* Xữ lý router Client ********
-// Trang chủ
+// Index.js 
 const clientRoutes = require('./router/clients');
-app.use('/client', clientRoutes);
+app.use('/client',clientRoutes);
 
-// Trang cửa hàng
-const shopRoutes = require('./router/clients');
-app.use('/client/list', shopRoutes);
+const adminRoutes = require('./router/admin');
+app.use('/admin', adminRoutes);
 
-// Trang tin tức
-const newRoutes = require('./router/clients');
-app.use('/client/new', newRoutes);
+const apiRoutes = require('./router/api');
+app.use('/api', apiRoutes);
 
-// Trang giới thiệu
-const aboutRoutes = require('./router/clients');
-app.use('/client/about', aboutRoutes);
+app.post('/upload', upload.single('file'), (req, res) => {
+    res.send('Tệp tin đã được tải lên thành công !');
+});
 
-// Trang liên hệ
-const contactRoutes = require('./router/clients');
-app.use('/client/contact', contactRoutes);
 
 app.listen(port, () => {
     console.log(`Ứng dụng đang chạy với: ${port}`);
 });
 
-
-// // ***** Thứ tự đặt API
-// // get list
-// // get create
-// // post create
-// // get edit
-// // post edit
-// // get delete
-// // get detail
-
-// Cài đặt thư mục lưu hình ảnh và đổi tên hình ảnh
-// const storage = multer.diskStorage({
-//     destination: function (req, file, cb) {
-//         cb(null, './uploads')
-//     },
-//     filename: function (req, file, cb) {
-//         cb(null, Date.now() + '-' + file.originalname)
-//     }
-// });
-// const uploadMiddleware = multer({ storage: storage }).single('cateImage');

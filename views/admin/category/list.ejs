@@ -88,7 +88,22 @@
                                             </tfoot>
                                                                                         
                                             <tbody>
-                                                
+
+                                                <% categories.forEach( element => {%>
+                                                <tr>
+                                                    <td><%=element.id %></td>
+                                                    <td><%=element.cateName %></td>
+                                                    <td><img src="/assets/uploads/<%=element.cateImage %>" alt="No Image"></td>
+                                                    <td><%=element.cateStatus %></td>
+                                                    <td>
+                                                        <a href="/admin/categories/edit/<%=element.id %>">Sửa</a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="/admin/categories/delete/<%=element.id %>">Xóa</a>
+                                                    </td>
+                                                </tr>
+                                                <% }); %>
+                                    
                                             </tbody>
                                         </table>
                                     </div>

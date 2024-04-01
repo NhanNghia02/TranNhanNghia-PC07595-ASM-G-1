@@ -1,9 +1,9 @@
 const express = require('express');
-const homeClients = require('../src/controllers/client/home');
-const listClients = require('../src/controllers/client/shop');
-const newClients = require('../src/controllers/client/new');
-const aboutClients = require('../src/controllers/client/about');
-const contactClients = require('../src/controllers/client/contact');
+const homeClients = require('../controllers/client/home');
+const listClients = require('../controllers/client/shop');
+const newClients = require('../controllers/client/new');
+const aboutClients = require('../controllers/client/about');
+const contactClients = require('../controllers/client/contact');
 const router = express.Router();
 
 // Hiển thị dữ liệu trang home của client
