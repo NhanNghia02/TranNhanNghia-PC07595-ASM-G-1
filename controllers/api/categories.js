@@ -14,17 +14,16 @@ exports.listCategories = async (req, res, next) => {
 // Thêm
 exports.createCategories = async (req, res, next) => {
 
-    let name = req.body.name;
-    let image = req.file;
-    let status = req.body.status;
+    let cateName = req.body.cateName;
+    let cateImage = req.body.cateImage;
+    let cateStatus = req.body.cateStatus;
 
     let category = {
-        name: name,
-        image: image.path,
-        status: status,
+        cateName: cateName,
+        cateImage: cateImage,
+        cateStatus: cateStatus,
     }
-
-    let result = await Category.create(category);
+    let result = await Category.addCategories(category);
     console.log(result);
 
     res.status(201).json({
@@ -33,34 +32,37 @@ exports.createCategories = async (req, res, next) => {
     })
 };
 
-// Sửa
-exports.editCategories = async (req, res, next) => {
+// Lấy id sửa
+exports.detailCategories = async (req, res, next) => {
+    // const file = req.file
 
-    let categories_id = req.params.categories_id;
+    let category_id = req.params.id;
 
-    let result = await Category.getOne(categories_id);
+    let result = await Category.getOne(category_id);
     console.log(result);
-
     res.status(201).json({
         data: result,
     })
 };
 
+// Sửa
 exports.updateCategories = async (req, res, next) => {
-    let categories_id = req.params.categories_id;
+    let cate_id = req.params.id;
 
-    let name = req.body.name;
-    let image = req.file
-    let status = req.body.status;
+    let cateName = req.body.cateName;
+    let cateImage = req.body.cateImage
+    let cateStatus = req.body.cateStatus;
 
     let category = {
-        name: name,
-        image: image.path,
-        status: status,
+        cateName: cateName,
+        cateImage: cateImage,
+        cateStatus: cateStatus,
     }
-    let result = await Category.editCategories(category, categories_id);
-    console.log(result);
 
+    let result = await Category.updateCategories(category, cate_id);
+    console.log(result);
+    console.log(category);
+    
     res.status(201).json({
         result: result,
         category: category
@@ -69,9 +71,9 @@ exports.updateCategories = async (req, res, next) => {
 
 // Xóa
 exports.deleteCategories = async (req, res, next) => {
-    let categories_id = req.params.categories_id;
-
-    let result = await Category.deleteCategories(categories_id);
+    let id = req.params.id;
+    
+    let result = await Category.deleteCategories(id);
     console.log(result);
 
     res.status(201).json({

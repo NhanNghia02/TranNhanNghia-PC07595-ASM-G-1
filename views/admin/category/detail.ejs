@@ -50,7 +50,7 @@
                     <div class="card-header">
                         <h2>Sửa Loại Hàng</h2>
                     </div>
-                    <% if (category) { %>
+
                     <form method="post" action="/admin/category/detail/<%= category.id %>" enctype="multipart/form-data">
                         <div class="form-floating mb-3 mt-3">
                             <label  for="cateName">Tên</label>
@@ -59,7 +59,7 @@
                         <div class="form-floating mb-3 mt-3">
                             <label  for="cateImage">Hình ảnh</label>
                             <input type="file" class="form-control" name="cateImage"><br>
-                            <img src="/uploads/<%= category.cateImage %>" alt="" width="100px">
+                            <img src="/<%= category.cateImage %>" alt="" width="100px">
                         </div>
                         <div class="form-floating mb-3 mt-3">
                         <label  for="cateStatus">Tình Trạng</label>
@@ -70,9 +70,7 @@
                         </div>
                         <button name="editCate" class="btn btn-primary">Sửa</button>
                     </form>
-                    <% } else { %>
-                        <p>Category not found</p>
-                    <% } %>
+
                 </div>
                 <!-- /.container-fluid -->
 

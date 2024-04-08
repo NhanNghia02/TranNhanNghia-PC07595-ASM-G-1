@@ -4,20 +4,13 @@
 
     </section>
 
+    <% categories.forEach( element => {%>
     <section id="logo-brand" class="section-p1">
         <a href="">
-            <img src="/clients/images/prod/logo-iphone.png" alt="Image Shirt" width="60%">
-        </a>
-        <a href="">
-            <img src="/clients/images/prod/logo-samsung.png" alt="Image Shirt" width="60%">
-        </a>
-        <a href="">
-            <img src="/clients/images/prod/logo-oppo.png" alt="Image Shirt" width="60%">
-        </a>
-        <a href="">
-            <img src="/clients/images/prod/logo-xiaomi.png" alt="Image Shirt" width="60%">
+            <img src="/<%= element.cateImage %>" alt="Image Shirt" width="100px">
         </a>
     </section>
+    <% }); %>
 
     <section id="product1" class="section-p1">
         <h2>Tất Cả Sản Phẩm</h2>

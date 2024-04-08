@@ -10,7 +10,7 @@ module.exports = class Category {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve( data );
+                    resolve(data);
                 }
             });
         });
@@ -19,7 +19,7 @@ module.exports = class Category {
     // Lấy id danh mục sản phẩm
     static async getOne(categories_id) {
         return new Promise((resolve, reject) => {
-            let sql = `SELECT * FROM categories WHERE categories_id=${ categories_id }`;
+            let sql = `SELECT * FROM categories WHERE id=${ categories_id }`;
             db.query(sql, function (err, data) {
                 if (err) {
                     reject(err);
@@ -44,9 +44,9 @@ module.exports = class Category {
     }
 
     // Sửa danh mục sản phẩm
-    static async editCategories(categories, categories_id) {
+    static async updateCategories(category, cate_id) {
         return new Promise((resolve, reject) => {
-            db.query('UPDATE categories SET ? WHERE category_id=?', [categories, categories_id], function (err, data) {
+            db.query('UPDATE categories SET ? WHERE id = ?', [category, cate_id], function (err, data) {
                 if (err) {
                     reject(err);
                 } else {
@@ -57,9 +57,9 @@ module.exports = class Category {
     }
 
     // Xoá danh mục sản phẩm
-    static async deleteCategories(categories_id) {
+    static async deleteCategories(id) {
         return new Promise((resolve, reject) => {
-            let sql = `DELETE FROM categories WHERE category_id= ${categories_id}`;
+            let sql = `DELETE FROM categories WHERE id = ${id}`;
             db.query(sql, function (err, data) {
                 if (err) {
                     reject(err);
