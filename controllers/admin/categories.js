@@ -2,7 +2,7 @@ const Category = require("../../model/category");
 
 // Lấy tất cả danh mục
 exports.listCategorie = async function (req, res) {
-    fetch('http:/localhost:3000/api/categories/')
+    fetch('http://localhost:3000/api/categories/')
         .then(response => response.json())
         .then(data => {
             // res.send(data);
@@ -15,7 +15,7 @@ exports.listCategorie = async function (req, res) {
 
 // Lấy tất cả danh mục
 exports.listCategorieClient = async function (req, res) {
-    fetch('http:/localhost:3000/api/categories/')
+    fetch('http://localhost:3000/api/categories/')
         .then(response => response.json())
         .then(data => {
             // res.send(data);
@@ -40,8 +40,7 @@ exports.editCategories = (req, res, next) => {
             })
         })
         .catch(error => console.error('Error:', error));
-
-};
+    };
 
 // Thêm danh mục mới
 // Hiển thị
@@ -53,13 +52,13 @@ exports.createAdmin = (req, res, next) => {
 exports.postAdmin = async (req, res, next) => {
     // Gọi api 
     let cateName = req.body.cateName;
-    let cateImage = req.file;
+    let cateImage = req.file.filename;
     let cateStatus = req.body.cateStatus;
     console.log(req.file);
 
     let category = {
         cateName: cateName,
-        cateImage: cateImage.filename,
+        cateImage: cateImage,
         cateStatus: cateStatus,
     };
     console.log(category)
@@ -111,12 +110,12 @@ exports.updateCategories = async (req, res, next) => {
     let cate_id = req.params.id;
 
     let cateName = req.body.cateName;
-    let cateImage = req.file;
+    let cateImage = req.file.filename;
     let cateStatus = req.body.cateStatus;
 
     let category = {
         cateName: cateName,
-        cateImage: cateImage.filename,
+        cateImage: cateImage,
         cateStatus: cateStatus,
     }
 

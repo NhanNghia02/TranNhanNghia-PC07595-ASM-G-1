@@ -10,7 +10,7 @@ app.set('view engine', 'ejs');
 app.set('views', "./views");
 app.use(express.static('assets'));
 app.use(express.static('uploads'));
-app.use(express.json())
+app.use(express.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }))
@@ -27,5 +27,5 @@ app.use('/api', apiRoutes);
 
 
 app.listen(port, () => {
-    console.log(`Ứng dụng đang chạy với: ${port}`);
+    console.log(`Ứng dụng đang chạy với: http://localhost:${port}/client`);
 });

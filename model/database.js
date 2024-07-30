@@ -8,7 +8,7 @@ var db = mysql.createConnection({
 
 db.connect(function(err){
     if(err) throw err;
-    console.log('Kết nối database thành công !');
+    console.log('Kết nối database thành công !!!');
 });
 
 module.exports = db;
